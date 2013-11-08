@@ -1,26 +1,13 @@
-import math, time
+# Problem Description: http://projecteuler.net/problem=11
+
+''' BRUTE FORCE '''
 
 # Author: Jonathan Lebron
 # Date: 11/8/2013
-# Problem Description: http://projecteuler.net/problem=11
 
-'''HELPER METHODS'''
+import math, time
 
-# to look up, currRow has to be >= consecNums - 1
-def canLookUp(currRow):
-    return currRow >= consecNums-1
-
-# to look down, currRow has to be <= rows - consecNums
-def canLookDown(currRow):
-    return currRow <= sideLength-consecNums
-    
-# to look left, currCol has to be >= consecNums - 1
-def canLookLeft(currCol):
-    return currCol >= consecNums-1
-    
-# to look right, currCol has to be <= cols - consecNums
-def canLookRight(currCol):
-    return currCol <= sideLength-consecNums
+# HELPER METHODS #
 
 def getConsecRight(index, grid):
     return grid[index:index+consecNums]
@@ -64,28 +51,29 @@ def getProduct(inList):
         out *= ele
     return out
     
-'''END HELPER METHODS'''
+# END HELPER METHODS #
 
-grid = "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08 \
-        49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00 \
-        81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65 \
-        52 70 95 23 04 60 11 42 69 24 68 56 01 32 56 71 37 02 36 91 \
-        22 31 16 71 51 67 63 89 41 92 36 54 22 40 40 28 66 33 13 80 \
-        24 47 32 60 99 03 45 02 44 75 33 53 78 36 84 20 35 17 12 50 \
-        32 98 81 28 64 23 67 10 26 38 40 67 59 54 70 66 18 38 64 70 \
-        67 26 20 68 02 62 12 20 95 63 94 39 63 08 40 91 66 49 94 21 \
-        24 55 58 05 66 73 99 26 97 17 78 78 96 83 14 88 34 89 63 72 \
-        21 36 23 09 75 00 76 44 20 45 35 14 00 61 33 97 34 31 33 95 \
-        78 17 53 28 22 75 31 67 15 94 03 80 04 62 16 14 09 53 56 92 \
-        16 39 05 42 96 35 31 47 55 58 88 24 00 17 54 24 36 29 85 57 \
-        86 56 00 48 35 71 89 07 05 44 44 37 44 60 21 58 51 54 17 58 \
-        19 80 81 68 05 94 47 69 28 73 92 13 86 52 17 77 04 89 55 40 \
-        04 52 08 83 97 35 99 16 07 97 57 32 16 26 26 79 33 27 98 66 \
-        88 36 68 87 57 62 20 72 03 46 33 67 46 55 12 32 63 93 53 69 \
-        04 42 16 73 38 25 39 11 24 94 72 18 08 46 29 32 40 62 76 36 \
-        20 69 36 41 72 30 23 88 34 62 99 69 82 67 59 85 74 04 36 16 \
-        20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54 \
-        01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48"
+grid = "\
+08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08 \
+49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00 \
+81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65 \
+52 70 95 23 04 60 11 42 69 24 68 56 01 32 56 71 37 02 36 91 \
+22 31 16 71 51 67 63 89 41 92 36 54 22 40 40 28 66 33 13 80 \
+24 47 32 60 99 03 45 02 44 75 33 53 78 36 84 20 35 17 12 50 \
+32 98 81 28 64 23 67 10 26 38 40 67 59 54 70 66 18 38 64 70 \
+67 26 20 68 02 62 12 20 95 63 94 39 63 08 40 91 66 49 94 21 \
+24 55 58 05 66 73 99 26 97 17 78 78 96 83 14 88 34 89 63 72 \
+21 36 23 09 75 00 76 44 20 45 35 14 00 61 33 97 34 31 33 95 \
+78 17 53 28 22 75 31 67 15 94 03 80 04 62 16 14 09 53 56 92 \
+16 39 05 42 96 35 31 47 55 58 88 24 00 17 54 24 36 29 85 57 \
+86 56 00 48 35 71 89 07 05 44 44 37 44 60 21 58 51 54 17 58 \
+19 80 81 68 05 94 47 69 28 73 92 13 86 52 17 77 04 89 55 40 \
+04 52 08 83 97 35 99 16 07 97 57 32 16 26 26 79 33 27 98 66 \
+88 36 68 87 57 62 20 72 03 46 33 67 46 55 12 32 63 93 53 69 \
+04 42 16 73 38 25 39 11 24 94 72 18 08 46 29 32 40 62 76 36 \
+20 69 36 41 72 30 23 88 34 62 99 69 82 67 59 85 74 04 36 16 \
+20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54 \
+01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48"
 
 grid = map(int, grid.split(" "))
 sideLength = int(math.sqrt(len(grid)))
@@ -93,28 +81,29 @@ consecNums = 4
 maxOut = 0
 
 for row in xrange(sideLength):
-    up = canLookUp(row)
-    down = canLookDown(row)
+    canLookUp = row >= (consecNums - 1)
+    canLookDown = row <= (sideLength - consecNums)
     for col in xrange(sideLength):
         currIndex = row*sideLength + col
-        right = canLookRight(col)
-        left = canLookLeft(col)
-        if up:
+        canLookRight = col <= (sideLength - consecNums)
+        canLookLeft = col >= (consecNums - 1)
+        if canLookUp:
             maxOut = max(maxOut, getProduct(getConsecUp(currIndex, grid)))
-        if down:
+        if canLookDown:
             maxOut = max(maxOut, getProduct(getConsecDown(currIndex, grid)))
-        if right:
+        if canLookRight:
             maxOut = max(maxOut, getProduct(getConsecRight(currIndex, grid)))
-        if left:
+        if canLookLeft:
             maxOut = max(maxOut, getProduct(getConsecLeft(currIndex, grid)))
-        if up and right:
-            maxOut = max(maxOut, getProduct(getConsecUpRight(currIndex,grid)))
-        if up and left:
+        if canLookUp and canLookLeft:
             maxOut = max(maxOut, getProduct(getConsecUpLeft(currIndex,grid)))
-        if down and left:
+        if canLookUp and canLookRight:
+            maxOut = max(maxOut, getProduct(getConsecUpRight(currIndex,grid)))
+        if canLookDown and canLookLeft:
             maxOut = max(maxOut, getProduct(getConsecDownLeft(currIndex,grid)))
-        if down and right:
+        if canLookDown and canLookRight:
             maxOut = max(maxOut, getProduct(getConsecDownRight(currIndex,grid)))
             
 print maxOut
-        
+
+''' END BRUTE FORCE '''
