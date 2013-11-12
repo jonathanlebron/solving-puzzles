@@ -11,21 +11,9 @@ import math, time
 
 def getConsecRight(index, grid):
     return grid[index:index+consecNums]
-    
-def getConsecLeft(index, grid):
-    return grid[index-consecNums+1:index+1]
-    
-def getConsecUp(index, grid):
-    return grid[index-(sideLength*(consecNums-1)):index+1:sideLength]
 
 def getConsecDown(index, grid):
     return grid[index:index+(sideLength*(consecNums-1))+1:sideLength]
-    
-def getConsecUpLeft(index, grid):
-    out = [grid[index]]
-    for i in xrange(1,consecNums):
-        out.append(grid[index-(sideLength*i)-i])
-    return out
     
 def getConsecUpRight(index, grid):
     out = [grid[index]]
@@ -33,12 +21,6 @@ def getConsecUpRight(index, grid):
         out.append(grid[index-(sideLength*i)+i])
     return out
 
-def getConsecDownLeft(index, grid):
-    out = [grid[index]]
-    for i in xrange(1,consecNums):
-        out.append(grid[index+(sideLength*i)-i])
-    return out
-    
 def getConsecDownRight(index, grid):
     out = [grid[index]]
     for i in xrange(1,consecNums):
@@ -87,20 +69,13 @@ for row in xrange(sideLength):
         currIndex = row*sideLength + col
         canLookRight = col <= (sideLength - consecNums)
         canLookLeft = col >= (consecNums - 1)
-        if canLookUp:
-            maxOut = max(maxOut, getProduct(getConsecUp(currIndex, grid)))
+
         if canLookDown:
             maxOut = max(maxOut, getProduct(getConsecDown(currIndex, grid)))
         if canLookRight:
             maxOut = max(maxOut, getProduct(getConsecRight(currIndex, grid)))
-        if canLookLeft:
-            maxOut = max(maxOut, getProduct(getConsecLeft(currIndex, grid)))
-        if canLookUp and canLookLeft:
-            maxOut = max(maxOut, getProduct(getConsecUpLeft(currIndex,grid)))
         if canLookUp and canLookRight:
             maxOut = max(maxOut, getProduct(getConsecUpRight(currIndex,grid)))
-        if canLookDown and canLookLeft:
-            maxOut = max(maxOut, getProduct(getConsecDownLeft(currIndex,grid)))
         if canLookDown and canLookRight:
             maxOut = max(maxOut, getProduct(getConsecDownRight(currIndex,grid)))
             
