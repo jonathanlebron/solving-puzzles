@@ -3,7 +3,7 @@
 ''' BRUTE FORCE '''
 
 # Author: Jonathan Lebron
-# Date: 11/8/2013
+# Date: 11/12/2013
 
 import math, time
 
@@ -61,24 +61,34 @@ grid = map(int, grid.split(" "))
 sideLength = int(math.sqrt(len(grid)))
 consecNums = 4
 maxOut = 0
+start = time.clock()
 
 for row in xrange(sideLength):
-    canLookUp = row >= (consecNums - 1)
-    canLookDown = row <= (sideLength - consecNums)
     for col in xrange(sideLength):
         currIndex = row*sideLength + col
-        canLookRight = col <= (sideLength - consecNums)
-        canLookLeft = col >= (consecNums - 1)
+        down = right = upRight = downRight = 0
+        
+        try:
+            down = getProduct(getConsecDown(currIndex, grid))
+        except IndexError:
+            pass
+        try:
+            right = getProduct(getConsecRight(currIndex, grid))
+        except IndexError:
+            pass
+        try:
+            upRight = getProduct(getConsecUpRight(currIndex,grid))
+        except IndexError:
+            pass
+        try:
+            downRight = getProduct(getConsecDownRight(currIndex,grid))
+        except IndexError:
+            pass
+        
+        maxOut = max(maxOut, down, right, upRight, downRight)
+        
+elapsed = time.clock() - start
 
-        if canLookDown:
-            maxOut = max(maxOut, getProduct(getConsecDown(currIndex, grid)))
-        if canLookRight:
-            maxOut = max(maxOut, getProduct(getConsecRight(currIndex, grid)))
-        if canLookUp and canLookRight:
-            maxOut = max(maxOut, getProduct(getConsecUpRight(currIndex,grid)))
-        if canLookDown and canLookRight:
-            maxOut = max(maxOut, getProduct(getConsecDownRight(currIndex,grid)))
-            
-print maxOut
+print maxOut, ", time elapse = ", elapsed
 
 ''' END BRUTE FORCE '''
