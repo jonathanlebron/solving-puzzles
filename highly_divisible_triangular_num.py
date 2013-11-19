@@ -3,7 +3,7 @@
 #   So the 7th triangle number would be 1 + 2 + 3 + 4 + 5 + 6 + 7 = 28. The 
 #   first ten terms would be:
 #
-#     1, 3, 6, 10, 15, 21, 28, 36, 45, 55, ...
+#       1, 3, 6, 10, 15, 21, 28, 36, 45, 55, ...
 #
 #   Let us list the factors of the first seven triangle numbers:
 #
@@ -29,25 +29,25 @@
 from math import sqrt
 
 def getNumFactors(n):
-  if n == 1: return 1
+    if n == 1: return 1
      
-  factors = 2
-  m = int(sqrt(n))+1
+    factors = 2
+    m = int(sqrt(n))+1
      
-  for i in range(2, m):
-    if n%i == 0:
-      factors += 2
+    for i in range(2, m):
+        if n%i == 0:
+            factors += 2
      
-  return factors
+    return factors
 
 n = 1
 currTriNum = n
 numFactors = getNumFactors(currTriNum)
 
 while numFactors < 500:
-  n += 1
-  currTriNum += n
-  numFactors =  getNumFactors(currTriNum)
+    n += 1
+    currTriNum += n
+    numFactors =  getNumFactors(currTriNum)
     
 print currTriNum
 
