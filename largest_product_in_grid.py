@@ -70,20 +70,16 @@ for row in xrange(sideLength):
         
         try:
             down = getProduct(getConsecDown(currIndex, grid))
-        except IndexError:
-            pass
+        except IndexError: pass
         try:
             right = getProduct(getConsecRight(currIndex, grid))
-        except IndexError:
-            pass
+        except IndexError: pass
         try:
             upRight = getProduct(getConsecUpRight(currIndex,grid))
-        except IndexError:
-            pass
+        except IndexError: pass
         try:
             downRight = getProduct(getConsecDownRight(currIndex,grid))
-        except IndexError:
-            pass
+        except IndexError: pass
         
         maxOut = max(maxOut, down, right, upRight, downRight)
         
